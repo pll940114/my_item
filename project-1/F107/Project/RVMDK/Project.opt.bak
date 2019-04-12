@@ -1,0 +1,119 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+ cExt (*.c)
+ aExt (*.s*; *.src; *.a*)
+ oExt (*.obj)
+ lExt (*.lib)
+ tExt (*.txt; *.h; *.inc)
+ pExt (*.plm)
+ CppX (*.cpp)
+ DaveTm { 0,0,0,0,0,0,0,0 }
+
+Target (STM3210C-EVAL), 0x0004 // Tools: 'ARM-ADS'
+GRPOPT 1,(User),1,0,0
+GRPOPT 2,(STM32F10x_StdPeriph_Driver),0,0,0
+GRPOPT 3,(STM32_ETH_Driver),0,0,0
+GRPOPT 4,(STM32_EVAL),0,0,0
+GRPOPT 5,(LwIP),0,0,0
+GRPOPT 6,(efsl),0,0,0
+GRPOPT 7,(CMSIS),0,0,0
+GRPOPT 8,(RVMDK),0,0,0
+
+OPTFFF 1,1,1,687865856,0,0,0,0,<..\src\stm32f10x_it.c><stm32f10x_it.c> 
+OPTFFF 1,2,1,67108866,0,1,1,0,<..\src\main.c><main.c> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,252,255,255,255,226,255,255,255,66,0,0,0,87,0,0,0,95,3,0,0,195,1,0,0 }
+OPTFFF 1,3,1,469762048,0,0,0,0,<..\src\stm32f107.c><stm32f107.c> 
+OPTFFF 1,4,1,637534208,0,0,0,0,<..\src\netconf.c><netconf.c> 
+OPTFFF 1,5,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\helloworld.c><helloworld.c> 
+OPTFFF 1,6,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\httpd.c><httpd.c> 
+OPTFFF 1,7,1,587202560,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\tftpserver.c><tftpserver.c> 
+OPTFFF 1,8,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\tftputils.c><tftputils.c> 
+OPTFFF 1,9,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\client.c><client.c> 
+OPTFFF 1,10,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\server.c><server.c> 
+OPTFFF 2,11,1,167772160,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c><stm32f10x_usart.c> 
+OPTFFF 2,12,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c><stm32f10x_gpio.c> 
+OPTFFF 2,13,1,83886080,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c><stm32f10x_rcc.c> 
+OPTFFF 2,14,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c><stm32f10x_spi.c> 
+OPTFFF 2,15,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c><stm32f10x_exti.c> 
+OPTFFF 2,16,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c><stm32f10x_flash.c> 
+OPTFFF 2,17,1,83886080,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c><misc.c> 
+OPTFFF 2,18,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c><stm32f10x_adc.c> 
+OPTFFF 2,19,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c><stm32f10x_tim.c> 
+OPTFFF 2,20,1,0,0,0,0,0,<..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c><stm32f10x_i2c.c> 
+OPTFFF 3,21,1,989855744,0,0,0,0,<..\..\Libraries\STM32_ETH_Driver\src\stm32_eth.c><stm32_eth.c> 
+OPTFFF 4,22,1,33554432,0,0,0,0,<..\..\Utilities\STM32_EVAL\STM3210C_EVAL\stm3210c_eval_ioe.c><stm3210c_eval_ioe.c> 
+OPTFFF 4,23,1,150994944,0,0,0,0,<..\..\Utilities\STM32_EVAL\stm32_eval.c><stm32_eval.c> 
+OPTFFF 4,24,1,0,0,0,0,0,<..\..\Utilities\STM32_EVAL\STM3210C_EVAL\stm3210c_eval_lcd.c><stm3210c_eval_lcd.c> 
+OPTFFF 5,25,1,1895825408,0,0,0,0,<..\..\Utilities\lwip-1.3.1\port\ethernetif.c><ethernetif.c> 
+OPTFFF 5,26,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\tcpip.c><tcpip.c> 
+OPTFFF 5,27,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\api_lib.c><api_lib.c> 
+OPTFFF 5,28,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\netbuf.c><netbuf.c> 
+OPTFFF 5,29,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\netifapi.c><netifapi.c> 
+OPTFFF 5,30,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\netdb.c><netdb.c> 
+OPTFFF 5,31,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\api_msg.c><api_msg.c> 
+OPTFFF 5,32,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\api\err.c><err.c> 
+OPTFFF 5,33,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\stats.c><stats.c> 
+OPTFFF 5,34,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\sys.c><sys.c> 
+OPTFFF 5,35,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\tcp.c><tcp.c> 
+OPTFFF 5,36,1,1442840576,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\tcp_in.c><tcp_in.c> 
+OPTFFF 5,37,1,150994944,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\tcp_out.c><tcp_out.c> 
+OPTFFF 5,38,1,352321536,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\udp.c><udp.c> 
+OPTFFF 5,39,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\dhcp.c><dhcp.c> 
+OPTFFF 5,40,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\init.c><init.c> 
+OPTFFF 5,41,1,402653184,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\mem.c><mem.c> 
+OPTFFF 5,42,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\memp.c><memp.c> 
+OPTFFF 5,43,1,637534208,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\netif.c><netif.c> 
+OPTFFF 5,44,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\pbuf.c><pbuf.c> 
+OPTFFF 5,45,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\raw.c><raw.c> 
+OPTFFF 5,46,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\autoip.c><autoip.c> 
+OPTFFF 5,47,1,369098752,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\icmp.c><icmp.c> 
+OPTFFF 5,48,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\igmp.c><igmp.c> 
+OPTFFF 5,49,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\inet.c><inet.c> 
+OPTFFF 5,50,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\inet_chksum.c><inet_chksum.c> 
+OPTFFF 5,51,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\ip.c><ip.c> 
+OPTFFF 5,52,1,536870912,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\ip_addr.c><ip_addr.c> 
+OPTFFF 5,53,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\core\ipv4\ip_frag.c><ip_frag.c> 
+OPTFFF 5,54,1,0,0,0,0,0,<..\..\Utilities\lwip-1.3.1\src\netif\etharp.c><etharp.c> 
+OPTFFF 6,55,1,0,0,0,0,0,<..\..\Utilities\efsl\source\dir.c><dir.c> 
+OPTFFF 6,56,1,0,0,0,0,0,<..\..\Utilities\efsl\source\disc.c><disc.c> 
+OPTFFF 6,57,1,0,0,0,0,0,<..\..\Utilities\efsl\source\efs.c><efs.c> 
+OPTFFF 6,58,1,0,0,0,0,0,<..\..\Utilities\efsl\source\extract.c><extract.c> 
+OPTFFF 6,59,1,0,0,0,0,0,<..\..\Utilities\efsl\source\fat.c><fat.c> 
+OPTFFF 6,60,1,0,0,0,0,0,<..\..\Utilities\efsl\source\file.c><file.c> 
+OPTFFF 6,61,1,0,0,0,0,0,<..\..\Utilities\efsl\source\fs.c><fs.c> 
+OPTFFF 6,62,1,0,0,0,0,0,<..\..\Utilities\efsl\source\ioman.c><ioman.c> 
+OPTFFF 6,63,1,0,0,0,0,0,<..\..\Utilities\efsl\source\ls.c><ls.c> 
+OPTFFF 6,64,1,0,0,0,0,0,<..\..\Utilities\efsl\source\mkfs.c><mkfs.c> 
+OPTFFF 6,65,1,0,0,0,0,0,<..\..\Utilities\efsl\source\partition.c><partition.c> 
+OPTFFF 6,66,1,0,0,0,0,0,<..\..\Utilities\efsl\source\plibc.c><plibc.c> 
+OPTFFF 6,67,1,0,0,0,0,0,<..\..\Utilities\efsl\source\time.c><time.c> 
+OPTFFF 6,68,1,0,0,0,0,0,<..\..\Utilities\efsl\source\ui.c><ui.c> 
+OPTFFF 6,69,1,0,0,0,0,0,<..\..\Utilities\efsl\source\interface\sd.c><sd.c> 
+OPTFFF 6,70,1,0,0,0,0,0,<..\..\Utilities\efsl\source\interface\sd_stm32.c><sd_stm32.c> 
+OPTFFF 7,71,1,0,0,0,0,0,<..\..\Libraries\CMSIS\Core\CM3\system_stm32f10x.c><system_stm32f10x.c> 
+OPTFFF 7,72,1,0,0,0,0,0,<..\..\Libraries\CMSIS\Core\CM3\core_cm3.c><core_cm3.c> 
+OPTFFF 8,73,2,218103808,0,0,0,0,<..\..\Libraries\CMSIS\Core\CM3\startup\arm\startup_stm32f10x_cl.s><startup_stm32f10x_cl.s> 
+
+
+TARGOPT 1, (STM3210C-EVAL)
+ ADSCLK=8000000
+  OPTTT 1,1,1,0
+  OPTHX 1,65535,0,0,0
+  OPTLX 79,66,8,<.\List\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,1
+  OPTAX 0
+  OPTDL (SARMCM3.DLL)()(DARMSTM.DLL)(-pSTM32F107xCSchedule)(SARMCM3.DLL)()(TARMSTM.DLL)(-pSTM32F107xC)
+  OPTDBG 49150,1,()()()()()()()()()() (BIN\UL2CM3.DLL)()()()
+  OPTKEY 0,(DLGTARM)((1010=77,100,443,650,0)(1007=105,140,282,408,0)(1008=105,727,471,956,0)(1009=120,156,354,697,0)(100=-1,-1,-1,-1,0)(110=-1,-1,-1,-1,0)(111=-1,-1,-1,-1,0)(1011=-1,-1,-1,-1,0)(180=-1,-1,-1,-1,0)(120=-1,-1,-1,-1,0)(121=-1,-1,-1,-1,0)(122=-1,-1,-1,-1,0)(123=-1,-1,-1,-1,0)(124=-1,-1,-1,-1,0)(125=-1,-1,-1,-1,0)(126=-1,-1,-1,-1,0)(140=-1,-1,-1,-1,0)(240=-1,-1,-1,-1,0)(190=-1,-1,-1,-1,0)(200=-1,-1,-1,-1,0)(170=-1,-1,-1,-1,0)(130=-1,-1,-1,-1,0)(131=-1,-1,-1,-1,0)(132=-1,-1,-1,-1,0)(133=-1,-1,-1,-1,0)(160=-1,-1,-1,-1,0)(161=-1,-1,-1,-1,0)(162=-1,-1,-1,-1,0)(210=-1,-1,-1,-1,0)(211=-1,-1,-1,-1,0)(220=-1,-1,-1,-1,0)(221=-1,-1,-1,-1,0)(230=-1,-1,-1,-1,0)(231=-1,-1,-1,-1,0)(232=-1,-1,-1,-1,0)(233=-1,-1,-1,-1,0)(150=-1,-1,-1,-1,0)(151=-1,-1,-1,-1,0))
+  OPTKEY 0,(ARMDBGFLAGS)()
+  OPTKEY 0,(DLGUARM)((105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0))
+  OPTKEY 0,(UL2CM3)(-UM0079A9E -O14 -S0 -C0 -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F10x_512 -FS08000000 -FL080000)
+  OPTWA 0,1,(data)
+  OPTDF 0x40000084
+  OPTLE <>
+  OPTLC <>
+EndOpt
+

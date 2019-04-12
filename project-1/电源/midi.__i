@@ -1,0 +1,1 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\CMSIS -I.\Lib\inc -I.\Lib\src -I.\User -I.\Startup -I.\Basic\delay -I.\Basic\sys -I.\Hardware\LED -I.\Hardware\KEY -I.\Basic\flash -I.\Hardware\BUZZER -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ST\STM32F10x" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD -o "midi.o" --omf_browse "midi.crf" --depend "midi.d" "Hardware\BUZZER\midi.c"

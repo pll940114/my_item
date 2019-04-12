@@ -1,0 +1,43 @@
+*** Creating Trace Output File 'YT32B1_STM32F103_demo.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '"core_cm3.o"'
+### List of Objects: adding '"system_stm32f10x.o"'
+### List of Objects: adding '"misc.o"'
+### List of Objects: adding '"stm32f10x_gpio.o"'
+### List of Objects: adding '"stm32f10x_rcc.o"'
+### List of Objects: adding '"stm32f10x_usart.o"'
+### List of Objects: adding '"stm32f10x_bkp.o"'
+### List of Objects: adding '"stm32f10x_pwr.o"'
+### List of Objects: adding '"stm32f10x_rtc.o"'
+### List of Objects: adding '"stm32f10x_flash.o"'
+### List of Objects: adding '"stm32f10x_i2c.o"'
+### List of Objects: adding '"startup_stm32f10x_md.o"'
+### List of Objects: adding '"main.o"'
+### List of Objects: adding '"stm32f10x_it.o"'
+### List of Objects: adding '"delay.o"'
+### List of Objects: adding '"sys.o"'
+### List of Objects: adding '"usart.o"'
+### List of Objects: adding '"i2c.o"'
+### List of Objects: adding '"led.o"'
+### List of Objects: adding '"key.o"'
+### List of Objects: adding '"touch_key.o"'
+### List of Objects: adding '"relay.o"'
+### List of Objects: adding '"oled0561.o"'
+### List of Objects: adding '"my1690.o"'
+### List of Objects: adding '"encoder.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 "core_cm3.o" "system_stm32f10x.o" "misc.o" "stm32f10x_gpio.o" "stm32f10x_rcc.o" "stm32f10x_usart.o" "stm32f10x_bkp.o" "stm32f10x_pwr.o" "stm32f10x_rtc.o" "stm32f10x_flash.o" "stm32f10x_i2c.o" "startup_stm32f10x_md.o" "main.o" "stm32f10x_it.o" "delay.o" "sys.o" "usart.o" "i2c.o" "led.o" "key.o" "touch_key.o" "relay.o" "oled0561.o" "my1690.o" "encoder.o" --strict --scatter "YT32B1_STM32F103_demo.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\YT32B1_STM32F103_demo.map" -o "YT32B1_STM32F103_demo.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: 'YT32B1_STM32F103_demo.axf'
+### ADS-LD Command File: 'YT32B1_STM32F103_demo.lnp'
+### Checking for dirty Components...
+### Creating CmdFile 'YT32B1_STM32F103_demo.lnp', Handle=0x000007EC
+### Writing '.lnp' file
+### ADS-LD Command file 'YT32B1_STM32F103_demo.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

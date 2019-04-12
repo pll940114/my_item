@@ -1,0 +1,68 @@
+*** Creating Trace Output File '.\Obj\STM3210C-EVAL.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\obj\stm32f10x_it.o"'
+### List of Objects: adding '".\obj\main.o"'
+### List of Objects: adding '".\obj\stm32f107.o"'
+### List of Objects: adding '".\obj\netconf.o"'
+### List of Objects: adding '".\obj\sci.o"'
+### List of Objects: adding '".\obj\tcp_client.o"'
+### List of Objects: adding '".\obj\stm32f10x_usart.o"'
+### List of Objects: adding '".\obj\stm32f10x_gpio.o"'
+### List of Objects: adding '".\obj\stm32f10x_rcc.o"'
+### List of Objects: adding '".\obj\stm32f10x_spi.o"'
+### List of Objects: adding '".\obj\stm32f10x_exti.o"'
+### List of Objects: adding '".\obj\stm32f10x_flash.o"'
+### List of Objects: adding '".\obj\misc.o"'
+### List of Objects: adding '".\obj\stm32f10x_adc.o"'
+### List of Objects: adding '".\obj\stm32f10x_tim.o"'
+### List of Objects: adding '".\obj\stm32f10x_i2c.o"'
+### List of Objects: adding '".\obj\stm32_eth.o"'
+### List of Objects: adding '".\obj\ethernetif.o"'
+### List of Objects: adding '".\obj\tcpip.o"'
+### List of Objects: adding '".\obj\api_lib.o"'
+### List of Objects: adding '".\obj\netbuf.o"'
+### List of Objects: adding '".\obj\netifapi.o"'
+### List of Objects: adding '".\obj\netdb.o"'
+### List of Objects: adding '".\obj\api_msg.o"'
+### List of Objects: adding '".\obj\err.o"'
+### List of Objects: adding '".\obj\stats.o"'
+### List of Objects: adding '".\obj\sys.o"'
+### List of Objects: adding '".\obj\tcp.o"'
+### List of Objects: adding '".\obj\tcp_in.o"'
+### List of Objects: adding '".\obj\tcp_out.o"'
+### List of Objects: adding '".\obj\udp.o"'
+### List of Objects: adding '".\obj\dhcp.o"'
+### List of Objects: adding '".\obj\init.o"'
+### List of Objects: adding '".\obj\mem.o"'
+### List of Objects: adding '".\obj\memp.o"'
+### List of Objects: adding '".\obj\netif.o"'
+### List of Objects: adding '".\obj\pbuf.o"'
+### List of Objects: adding '".\obj\raw.o"'
+### List of Objects: adding '".\obj\autoip.o"'
+### List of Objects: adding '".\obj\icmp.o"'
+### List of Objects: adding '".\obj\igmp.o"'
+### List of Objects: adding '".\obj\inet.o"'
+### List of Objects: adding '".\obj\inet_chksum.o"'
+### List of Objects: adding '".\obj\ip.o"'
+### List of Objects: adding '".\obj\ip_addr.o"'
+### List of Objects: adding '".\obj\ip_frag.o"'
+### List of Objects: adding '".\obj\etharp.o"'
+### List of Objects: adding '".\obj\system_stm32f10x.o"'
+### List of Objects: adding '".\obj\core_cm3.o"'
+### List of Objects: adding '".\obj\startup_stm32f10x_cl.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\obj\stm32f10x_it.o" ".\obj\main.o" ".\obj\stm32f107.o" ".\obj\netconf.o" ".\obj\sci.o" ".\obj\tcp_client.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_spi.o" ".\obj\stm32f10x_exti.o" ".\obj\stm32f10x_flash.o" ".\obj\misc.o" ".\obj\stm32f10x_adc.o" ".\obj\stm32f10x_tim.o" ".\obj\stm32f10x_i2c.o" ".\obj\stm32_eth.o" ".\obj\ethernetif.o" ".\obj\tcpip.o" ".\obj\api_lib.o" ".\obj\netbuf.o" ".\obj\netifapi.o" ".\obj\netdb.o" ".\obj\api_msg.o" ".\obj\err.o" ".\obj\stats.o" ".\obj\sys.o" ".\obj\tcp.o" ".\obj\tcp_in.o" ".\obj\tcp_out.o" ".\obj\udp.o" ".\obj\dhcp.o" ".\obj\init.o" ".\obj\mem.o" ".\obj\memp.o" ".\obj\netif.o" ".\obj\pbuf.o" ".\obj\raw.o" ".\obj\autoip.o" ".\obj\icmp.o" ".\obj\igmp.o" ".\obj\inet.o" ".\obj\inet_chksum.o" ".\obj\ip.o" ".\obj\ip_addr.o" ".\obj\ip_frag.o" ".\obj\etharp.o" ".\obj\system_stm32f10x.o" ".\obj\core_cm3.o" ".\obj\startup_stm32f10x_cl.o" --strict --scatter ".\Obj\STM3210C-EVAL.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\List\STM3210C-EVAL.map" -o .\Obj\STM3210C-EVAL.axf### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Obj\STM3210C-EVAL.axf'
+### ADS-LD Command File: '.\Obj\STM3210C-EVAL.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Obj\STM3210C-EVAL.lnp', Handle=0x0000021C
+### Writing '.lnp' file
+### ADS-LD Command file '.\Obj\STM3210C-EVAL.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

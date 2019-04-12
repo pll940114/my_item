@@ -1,0 +1,15 @@
+.\Obj\ioman.o: ..\..\Utilities\efsl\source\ioman.c
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\ioman.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\interface.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\types.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\config.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\config.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\interface\sd_stm32.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\interface\../debug.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\interface\../config.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\config.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\error.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\config.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\plibc.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\config.h
+.\Obj\ioman.o: ..\..\Utilities\efsl\include\config.h
