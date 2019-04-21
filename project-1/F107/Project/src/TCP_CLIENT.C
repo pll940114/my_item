@@ -110,9 +110,9 @@ err_t  TCP_Client_Recv(void *arg, struct tcp_pcb *pcb,struct pbuf *p,err_t err)
 		}
 /***********打印数据验证***********/
 			for(j=0;j<=i;j++)
-			printf("%s %c",member[j].number,member[j].name);
-			printf("%d",i);
-			printf("\n");
+//			USART2_printf("%s %c",member[j].number,member[j].name);
+//			USART2_printf("%d",i);
+//			USART2_printf("\n");
 			if(i==100)i=0;
 			/*************************************************************************/
 			{
@@ -123,7 +123,7 @@ err_t  TCP_Client_Recv(void *arg, struct tcp_pcb *pcb,struct pbuf *p,err_t err)
 				delay_ms(10);
 				USART4_printf("AT+CSCS=\"GSM\"\r\n");
 				delay_ms(500);
-				USART4_printf("AT+CMGS=\"18988746231\"\r\n");	//15994997557欣锐 13559725210傻屌  13242353288毅营 18988746231Peng
+				USART4_printf("AT+CMGS=\"13559725210\"\r\n");	//15994997557欣锐 13559725210傻屌  13242353288毅营 18988746231Peng
 				delay_ms(500);
 				USART4_printf("%s",C);		
 				delay_ms(10);

@@ -28,3 +28,4 @@
 .\output\main.o: .\HARDWARE\Beep\beep.h
 .\output\main.o: .\HARDWARE\FLASH\flash.h
 .\output\main.o: .\HARDWARE\Adc\adc.h
+.\output\main.o: .\HARDWARE\Sensor\sensor.h

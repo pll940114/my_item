@@ -53,23 +53,25 @@ int main(void)
 		LED_Init2();
 		LED_Init3();
 		/*短信模块配置*/
-		NVIC_Configuration(); 
-	
+		NVIC_Configuration();
+		
 	while(1)
-	{    
+	{  
 		static unsigned int i=0;
 		u8 Res;
+		USART2_printf("123\n");
 		
 /******************************************************************************************/
 /*************************接收OpenMV传来的数据并发送给数据库*******************************/
-/******************************************************************************************/		
-		if(USART_GetFlagStatus(UART5,USART_FLAG_RXNE) != RESET){
+/******************************************************************************************/	
+	if(USART_GetFlagStatus(UART5,USART_FLAG_RXNE) != RESET)
+	{
 			a =USART_ReceiveData(UART5);
 		  if(a=='A'){
 				tcp_data[0] = 'A';
 				tcp_data[1] = '\0';
-//				printf("#1GC1\r\n");   
-//				GPIO_SetBits(GPIOC,GPIO_Pin_13);
+				printf("#1GC1\r\n");   
+				GPIO_SetBits(GPIOC,GPIO_Pin_13);
 			/******************************/
 				pcb = Check_TCP_Connect();//检查连接
 				if(pcb != 0)
@@ -82,8 +84,8 @@ int main(void)
 			 if(a=='B'){
 				tcp_data[0] = 'B';
 				tcp_data[1] = '\0';
-//				printf("#2GC1\r\n");   
-//			  GPIO_SetBits(GPIOC,GPIO_Pin_2);
+				printf("#2GC1\r\n");   
+			  GPIO_SetBits(GPIOC,GPIO_Pin_2);
 				 /******************************/
 				pcb = Check_TCP_Connect();//检查连接
 				if(pcb != 0)
@@ -96,8 +98,8 @@ int main(void)
 			  if(a=='C'){
 			  tcp_data[0] = 'C';
 				tcp_data[1] = '\0';
-//				printf("#3GC1\r\n");   
-//			  GPIO_SetBits(GPIOC,GPIO_Pin_3);
+				printf("#3GC1\r\n");   
+			  GPIO_SetBits(GPIOC,GPIO_Pin_3);
 				/******************************/
 				pcb = Check_TCP_Connect();//检查连接
 				if(pcb != 0)
@@ -114,7 +116,7 @@ int main(void)
 /*********************************************************************************/
 /*********************接收A53传来的数据并与缓存的数据进行匹配*********************/
 /*********************************************************************************/	
-		if(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) != RESET)  
+	if(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) != RESET)  
 	{ 
 		Res =USART_ReceiveData(USART2);
 		if(Res=='E')  //判断结束标志位
@@ -140,9 +142,21 @@ int main(void)
 		{
 			if(!strncmp(str,member[nm].number,6))
 			{
-				if(member[nm].name=='A')GPIO_SetBits(GPIOC,GPIO_Pin_13);  
-				if(member[nm].name=='B')GPIO_SetBits(GPIOC,GPIO_Pin_2); 
-				if(member[nm].name=='C')GPIO_SetBits(GPIOC,GPIO_Pin_3); 
+				if(member[nm].name=='A')
+				{
+					printf("#4GC1\r\n");
+					GPIO_ResetBits(GPIOC,GPIO_Pin_13); 
+				} 
+				if(member[nm].name=='B')
+				{
+					printf("#5GC1\r\n");
+					GPIO_ResetBits(GPIOC,GPIO_Pin_2); 
+				}
+				if(member[nm].name=='C')
+				{
+					printf("#6GC1\r\n");
+					GPIO_ResetBits(GPIOC,GPIO_Pin_3); 
+				}
 //				printf("sucess\n");  //功能测试
 				p=1;
 //				printf("%s\n",str);
@@ -153,8 +167,9 @@ int main(void)
 			}
 		}
 //		printf("%d\n",p);
-		if(p==1)USART2_printf("11");  //用户验证码和数据库进行匹配，有则为1，反之为0
-		if(p==0)USART2_printf("00");
+		delay_ms(1000);
+		if(p==1)printf("1Z");  //用户验证码和数据库进行匹配，有则为1，反之为0
+		if(p==0)printf("00");
 	}
 /*********************************************************************************/
 /*********************************************************************************/	

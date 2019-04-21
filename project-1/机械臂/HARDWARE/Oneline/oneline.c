@@ -12,7 +12,7 @@ extern uint16 pos[7][MOTOR_NUM];
 extern uint16 CPWM[MOTOR_NUM];
 extern char redata[257];
 extern uint8 ps2_buf[120];
-
+	uint8 flag_mp3=0;
 extern char point_in;
 extern uint8 flag_stop;
 extern uint8 line;
@@ -94,7 +94,9 @@ void RecStr_to_pos(void)
 ****************************************************************************************************************/	
 void RrcStr_to_pwm(void)
 {
-	CPWM[pwm_num]= UartRec[pwm_num];
+	int i=0;
+	for(i=1;i<7;i++)
+	 {CPWM[i]= UartRec[i];}
 }
 /***************************************************************************************************************
 函 数 名：Parse_String_Cmd()  
@@ -106,13 +108,20 @@ void RrcStr_to_pwm(void)
 int Parse_String_Cmd( char *str)
 {
 	char *p = NULL;
+
 	p = strchr(str,'#');
-	if (p == NULL)
+
+	
+	if (p == NULL )
 		return 1;
 	p++;
 	if ((*(p) >= '0' && *(p) <= '9' && *(p+1) == 'P')|| ((*(p)>='0' && *(p) <= '9')&& (*(p+1) == '0'&&*(p+1) <= '9') &&*(p+2) == 'P'))//如果当前字符串以#数字P开始的，说明是舵机转动命令直接返回
 		return 0;
-	
+	if(*p=='M')
+	{
+		//UART_PutStr(USART3,str);// 串口2发送出去这个命令
+		return 0;
+	}
 	if (strstr(str,"#255PRAD"))
 	{
 		send_mode |= SEND_SET_READ_UART_MOTOR_ANGLE;
@@ -293,66 +302,87 @@ void OneLine(char *str)
 	uint8 flag_num=0;		   //标记出现过#
 	uint8 flag_jidu=0;		   //标记出现过P
 	uint8 flag_time=0;		   //标记出现过T
+
 	uint16 i=0;
 //	uint8 model_flag = 0;				   //用来移动字符串
 	//uint8 buf[257] = {0};
   if (Parse_String_Cmd(str))
 		return ;
 	UART_PutStr(USART3,str);// 串口2发送出去这个命令
-	while( str[i]!='\n'  && i < 255)
+	if(strncmp(str,"#MP3",4)==0)
 	{
-		if(flag_num==1)	 				//出现过#
-		{
-			if(str[i]!='P')				//如果当前字符不是P
+	
+		//UART_PutStr(USART1,"test\r\n");
+		if(flag_download)
 			{
-				num_now=ASC_To_Valu(str[i]);//把当前数字字符转化成数字的值
-				motor_num=motor_num*10+num_now;
+					RecStr_to_pos();
 			}
-			else  						//当前字符是P
-				flag_num=0;
-		}
-
-		if(flag_jidu==1)				//出现过P
+		else
 		{
-			if((str[i]!='T')&(str[i]!='#'))	
-			{							//当前字符是出现p之后的非#非T的字符
-				jidu_now=ASC_To_Valu(str[i]);//把当前数字字符转化成数字的值
-				motor_jidu=motor_jidu*10+jidu_now;
-			}
-			else  						//当前字符是#或者T，角度数据结束
+				send_mode |= SEND_CC;
+		}
+			
+  }
+	else 
+	{
+		while( str[i]!='\n'  && i < 255)
+		{
+			if(flag_num==1)	 				//出现过#
 			{
-				flag_jidu=0;
-				if(motor_jidu>2500)
-					motor_jidu=2500;
-			  UartRec[motor_num]=motor_jidu;
-				pwm_num=motor_num;
-				motor_jidu=0;
-				motor_num=0;
-			}
-		}
-
-		if(flag_time==1)				//出现了T
-		{
-			time_now=ASC_To_Valu(str[i]);//把当前数字字符转化成数字的值
-			motor_time=motor_time*10+time_now;
-			UartRec[0]=motor_time;	   	//执行时间放在【0】位置
-			if(str[i+1]=='\r')
-			{	
-				if(motor_time<=100)		 //如果给定的时间小于100us，则舵机不进行速度控制，实时的改变舵机角度
-					RrcStr_to_pwm();
-				else					 //如果时间大于100us进行速度控制
+				if(str[i]!='P' && str[i]!='M')				//如果当前字符不是P
 				{
-					RecStr_to_pos(); 	//下一个字符是！，表示本行指令结束 ，将速度控制的时间值存放在数组的0位
+					num_now=ASC_To_Valu(str[i]);//把当前数字字符转化成数字的值
+					motor_num=motor_num*10+num_now;
+				}
+				else  						//当前字符是P
+					flag_num=0;
+			}
+			
+
+			if(flag_jidu==1)				//出现过P
+			{
+				if((str[i]!='T')&(str[i]!='#')& (str[i-1]!='M'))	
+				{							//当前字符是出现p之后的非#非T的字符
+					jidu_now=ASC_To_Valu(str[i]);//把当前数字字符转化成数字的值
+					motor_jidu=motor_jidu*10+jidu_now;
+				}
+				else  						//当前字符是#或者T，角度数据结束
+				{
+					flag_jidu=0;
+					if(motor_jidu>2500)
+						motor_jidu=2500;
+					UartRec[motor_num]=motor_jidu;
+					pwm_num=motor_num;
+					motor_jidu=0;
+					motor_num=0;
 				}
 			}
-		}
-	
-		if(str[i]=='#')
-			flag_num=1;
-		if(str[i]=='P')
-			flag_jidu=1;
-		if(str[i]=='T')
-			flag_time=1;
-		i++;
-	}	  
+
+			if(flag_time==1)				//出现了T
+			{
+				time_now=ASC_To_Valu(str[i]);//把当前数字字符转化成数字的值
+				motor_time=motor_time*10+time_now;
+				UartRec[0]=motor_time;	   	//执行时间放在【0】位置
+				if(str[i+1]=='\r')
+				{	
+					if(motor_time<=100)		 //如果给定的时间小于100us，则舵机不进行速度控制，实时的改变舵机角度
+						RrcStr_to_pwm();
+					else					 //如果时间大于100us进行速度控制
+					{
+						RecStr_to_pos(); 	//下一个字符是！，表示本行指令结束 ，将速度控制的时间值存放在数组的0位
+					}
+				}
+			}
+		
+			if(str[i]=='#')
+				flag_num=1;
+			if(str[i]=='P')
+				flag_jidu=1;
+			if(str[i]=='T')
+				flag_time=1;
+			//if(str[i]=='M')
+			//	flag_mp3=1;
+			i++;
+		}	 
+ }
 }

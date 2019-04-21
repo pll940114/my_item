@@ -21,6 +21,8 @@ void UART_Put_Num(uint16 dat);
 void UART_Put_Inf(char *inf,uint16 dat);
 void DealRec(void);
 void uart_init(u32 bound);
+void Usart2_send_nbyte(u8 *Data, u16 size);
+void Uart2_send_nbyte(u8 *Data, u16 size);
 #endif
 
 

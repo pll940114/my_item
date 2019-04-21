@@ -33,11 +33,13 @@ u8 i;
 u8 time=0;
 u8 led_time=0;
 u8 Flash_time=0;
+extern uint8 flag_vpwm;	
 #define	LED PBout(14)  	
 extern u32 a;
 extern u8 date[3];
 extern unsigned char flag_scan_ps2;
 extern uint8 flag_adc;
+extern uint8 flag_sensor;
 extern uint8 Flag_Flash;
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -183,7 +185,9 @@ void TIM4_IRQHandler(void)
 
 		if(time==10)
 		{
+	    flag_vpwm=1;
 			flag_scan_ps2 = 1;
+			flag_sensor=1;
 			flag_adc=1;
 			time=0;
 		}

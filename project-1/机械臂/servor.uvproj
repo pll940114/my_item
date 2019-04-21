@@ -330,7 +330,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine></Undefine>
-              <IncludePath>.\CORE;.\FWlib\inc;.\HARDWARE\Timer;.\HARDWARE\Servo;.\SYSTEM\delay;.\SYSTEM\sys;.\SYSTEM\usart;.\USER;.\HARDWARE\KEY;.\HARDWARE\LED;.\HARDWARE\PS2;.\HARDWARE\SPI;.\HARDWARE\FLASH;.\HARDWARE\Common;.\HARDWARE\Oneline;.\HARDWARE\Beep;.\HARDWARE\Adc</IncludePath>
+              <IncludePath>.\CORE;.\FWlib\inc;.\HARDWARE\Timer;.\HARDWARE\Servo;.\SYSTEM\delay;.\SYSTEM\sys;.\SYSTEM\usart;.\USER;.\HARDWARE\KEY;.\HARDWARE\LED;.\HARDWARE\PS2;.\HARDWARE\SPI;.\HARDWARE\FLASH;.\HARDWARE\Common;.\HARDWARE\Oneline;.\HARDWARE\Beep;.\HARDWARE\Adc;.\HARDWARE\Sensor</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -565,6 +565,11 @@
               <FileName>Adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\Adc\Adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>Sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\Sensor\Sensor.c</FilePath>
             </File>
           </Files>
         </Group>

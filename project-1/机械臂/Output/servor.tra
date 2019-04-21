@@ -37,6 +37,7 @@
 ### List of Objects: adding '".\output\oneline.o"'
 ### List of Objects: adding '".\output\beep.o"'
 ### List of Objects: adding '".\output\adc.o"'
+### List of Objects: adding '".\output\sensor.o"'
 ### List of Objects: adding '".\output\delay.o"'
 ### List of Objects: adding '".\output\sys.o"'
 ### List of Objects: adding '".\output\usart.o"'
@@ -44,7 +45,7 @@
 ### List of Objects: adding '".\output\stm32f10x_it.o"'
 ### List of Objects: adding '".\output\system_stm32f10x.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M3 ".\output\core_cm3.o" ".\output\startup_stm32f10x_md.o" ".\output\misc.o" ".\output\stm32f10x_adc.o" ".\output\stm32f10x_bkp.o" ".\output\stm32f10x_can.o" ".\output\stm32f10x_cec.o" ".\output\stm32f10x_crc.o" ".\output\stm32f10x_dac.o" ".\output\stm32f10x_dbgmcu.o" ".\output\stm32f10x_dma.o" ".\output\stm32f10x_exti.o" ".\output\stm32f10x_flash.o" ".\output\stm32f10x_fsmc.o" ".\output\stm32f10x_gpio.o" ".\output\stm32f10x_i2c.o" ".\output\stm32f10x_iwdg.o" ".\output\stm32f10x_pwr.o" ".\output\stm32f10x_rcc.o" ".\output\stm32f10x_rtc.o" ".\output\stm32f10x_sdio.o" ".\output\stm32f10x_spi.o" ".\output\stm32f10x_tim.o" ".\output\stm32f10x_usart.o" ".\output\stm32f10x_wwdg.o" ".\output\servor.o" ".\output\timer.o" ".\output\ps2.o" ".\output\led.o" ".\output\key.o" ".\output\spi.o" ".\output\flash.o" ".\output\common.o" ".\output\oneline.o" ".\output\beep.o" ".\output\adc.o" ".\output\delay.o" ".\output\sys.o" ".\output\usart.o" ".\output\main.o" ".\output\stm32f10x_it.o" ".\output\system_stm32f10x.o" 
+--cpu Cortex-M3 ".\output\core_cm3.o" ".\output\startup_stm32f10x_md.o" ".\output\misc.o" ".\output\stm32f10x_adc.o" ".\output\stm32f10x_bkp.o" ".\output\stm32f10x_can.o" ".\output\stm32f10x_cec.o" ".\output\stm32f10x_crc.o" ".\output\stm32f10x_dac.o" ".\output\stm32f10x_dbgmcu.o" ".\output\stm32f10x_dma.o" ".\output\stm32f10x_exti.o" ".\output\stm32f10x_flash.o" ".\output\stm32f10x_fsmc.o" ".\output\stm32f10x_gpio.o" ".\output\stm32f10x_i2c.o" ".\output\stm32f10x_iwdg.o" ".\output\stm32f10x_pwr.o" ".\output\stm32f10x_rcc.o" ".\output\stm32f10x_rtc.o" ".\output\stm32f10x_sdio.o" ".\output\stm32f10x_spi.o" ".\output\stm32f10x_tim.o" ".\output\stm32f10x_usart.o" ".\output\stm32f10x_wwdg.o" ".\output\servor.o" ".\output\timer.o" ".\output\ps2.o" ".\output\led.o" ".\output\key.o" ".\output\spi.o" ".\output\flash.o" ".\output\common.o" ".\output\oneline.o" ".\output\beep.o" ".\output\adc.o" ".\output\sensor.o" ".\output\delay.o" ".\output\sys.o" ".\output\usart.o" ".\output\main.o" ".\output\stm32f10x_it.o" ".\output\system_stm32f10x.o" 
 --strict --scatter ".\Output\servor.sct" 
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
@@ -52,7 +53,7 @@
 ### ADS-LD Output File: '.\Output\servor.axf'
 ### ADS-LD Command File: '.\Output\servor.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile '.\Output\servor.lnp', Handle=0x00000A30
+### Creating CmdFile '.\Output\servor.lnp', Handle=0x00000940
 ### Writing '.lnp' file
 ### ADS-LD Command file '.\Output\servor.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

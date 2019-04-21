@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <string.h>
 #include "stm32f10x.h"	    				//包含stm32库系统头文件
@@ -13,13 +12,21 @@
 #include "flash.h"
 #include "common.h"
 #include "adc.h"
-const u8 TEXT_Buffer[]={"Flash SPI TEST"};
+#include "sensor.h"
+
 #define SIZE sizeof(TEXT_Buffer)	
-	u8 datatemp[SIZE];
-	u32 FLASH_SIZE;
+	
+const u8 TEXT_Buffer[]={"Flash SPI TEST"};
+u8 yysb_init[] = {0xa0, 0xa0, 0xa0};	//初始化
+u8 yysb_mul[] = {0xab, 0xab, 0x00};		//启动连续识别
+u8 yysb_exit[] = {0xac,0xac,0x00};
+u8 yysb_rmul=0;
+u8 yysb_flag=0;
+u8 datatemp[SIZE];
+u32 FLASH_SIZE;
 u8 date[3];									//该变量用来存储安卓终端发来的数据
 u32 value;									
-u32 key, key_bak;
+u32 key,key_bak;
 extern u32 a;		  						//a用来计数，配合系统滴答定时器可检测代码运行时间
 extern uint8 flag_RecFul;
 uint16 pos[7][MOTOR_NUM]={ {1000,1500,1500,1500,1500,1500,1500,1500,1500},
@@ -32,7 +39,7 @@ uint16 pos[7][MOTOR_NUM]={ {1000,1500,1500,1500,1500,1500,1500,1500,1500},
 };	 //位置
 uint16 CPWM[MOTOR_NUM]=   {1500,1500,1500,1500,1500,1500,1500,1500,1500};
 uint16 UartRec[MOTOR_NUM]={1500,1500,1500,1500,1500,1500,1500,1500,1500};
-
+u8 yysb_start,Total_index;
 unsigned int dj1=1500;
 unsigned int dj2=1500;
 unsigned int dj3=1500;
@@ -67,7 +74,6 @@ uint8 flag_uart2_rev = 0;
 uint8 flag_uart2_rev_time_out = 0;
 uint8 flag_ps2_rev = 0;
 char redata[257] = {0};    // 定义接收数据变量数组
-//uint8 flag_read_adc = 0;
 
 unsigned long send_mode = 0;//当前串口接收到命令状态存储
 MotorData motor_data;//舵机总信息
@@ -76,6 +82,7 @@ CurrentItem cur_item;
 uint16 tuoji_count = 0;//脱机执行次数
 unsigned char flag_scan_ps2 = 0;
 uint8 flag_adc=0;
+uint8 flag_sensor=0;
 uint8 error = 0;
 uint8 file_list[MAX_SUPPORT_FILE_SAVE] = {0};
 int file_list_count = 0;
@@ -84,9 +91,8 @@ unsigned char ps2_buf[120] = {0};
 char uart2_buf[50] = {0};
 uint16 cur_count = 0;
 uint16 adc_value=0;
-//uchar ad_value = 0;
-//uchar beep_mode = 0;
 u8 ps2_mode=0;
+char csb=1;
 char All_down_num=-1;
 uint8 Flag_Flash=0;
 void SerVor_Test(void);
@@ -95,8 +101,8 @@ void Flash_Test(void);
 void updata_file_list(void);
 void InitMotor(void);
 void vpwm(void);
-void scan_ps2(void);
-void Check_Power(void);
+
+
 /**********************************************************************************/
 /*****************************主函数***********************************************/
 int main(void)
@@ -112,8 +118,9 @@ int main(void)
 	Beep_Init();
 	PS2_Init();
 	Adc_Init();
+	Sensor_init();
 	USART_Config(USART1,115200); 
-	//USART_Config(USART2,115200); 
+	USART_Config(USART2,115200); 
 	USART3_Config(115200);
 	SpiFlashInit();  		//初始化flash	 	
 	while(SpiFlashReadID()!=W25Q64)							//检测不到W25Q64
@@ -122,11 +129,15 @@ int main(void)
 	}
 	Led_Test();
 	Beep_Test();
+	Delay_ms(500);
+	Beep_Test();
   InitMotor();
+	
 	while (1)
 	{	
-	//	Flash_Test();
-	//UART_PutStr (USART2,"uart2 test\r\n");
+		static unsigned int i=0;
+		static unsigned int z=1;
+		u8 Res;		
 		if(flag_vpwm==1)		  
 		{	
 			vpwm();					//更新pwm[]数组
@@ -135,19 +146,11 @@ int main(void)
 		if(flag_RecFul==1)		   //串口接受完一条指令
 		{
 			
-			//LED3_ON();
 		 	DealRec();	 			//处理串口缓存中的数据
 			flag_RecFul=0;
-			//LED3_OFF();
 		}
 		GetOneMotorCMD();//获取一个命令
 		SendUartState();//发送状态信息
-  #if PS_SUPPORT
-		 scan_ps2();
-  #endif
-	//	LED_State();
-	//	Check_Power();
-		//cur_count++;
 	}
 } 
 
@@ -156,9 +159,7 @@ void updata_file_list(void)
 {
 	unsigned char i = 0;
 	unsigned char j = 0;
-	//unsigned char j = 1;
 	file_last_num = -1;
-	//file_last_num = 0;
 	ReadMoterInfor();
 	for (i = 0; i < motor_data.filecount; i++)
 	{
@@ -176,115 +177,7 @@ void InitMotor(void)
 	ReadMoterInfor();//读取舵机控制信息
 	updata_file_list();
 	memset(&cur_item,0,sizeof(cur_item));
-	//beep_mode = motor_data.beep_mode;
 }
-
-void Check_Power(void)
-{
-		if(flag_adc==1)
-		{
-			flag_adc=0;
-			adc_value=Get_Adc(0);
-			if(adc_value>=2100 && adc_value<=2481) //电池电量低  7.4V锂电池这里当电池电压低于6V就算没电  　>2100是为了防止没接电池误报
-			{
-				Beep=~Beep;
-			}
-			else
-			{
-				BEEP(OFF);
-			}
-			//UART_Put_Inf("adc:",adc_value); //将读取到ADC1 通道0的ADC值打印出来
-		}
-}
-
-void scan_ps2(void)
-{
-	int  kind = 0;
-	char *p = NULL;
-	char buf[15] = {0};
-	char i = 0;
-	if (flag_scan_ps2)
-	{
-		flag_scan_ps2 = 0;
-		key = PS2_DataKey();
-		ps2_mode=PS2_RedLight();
-		if(ps2_mode==0)
-		{
-			if(key_bak == key)return;
-			key_bak=key;
-		//	Beep=~Beep;
-			switch(key)
-			{
-				case PSB_PAD_UP:Beep=0;Delay_ms(300);kind = 1;break; 
-				case PSB_PAD_DOWN:Beep=0;Delay_ms(300);kind = 2;break;
-				case PSB_PAD_LEFT:Beep=0;Delay_ms(300);kind = 3;break;
-				case PSB_PAD_RIGHT:Beep=0;Delay_ms(300);kind = 4;break;
-
-				case PSB_TRIANGLE:Beep=0;Delay_ms(300);kind = 7;break;
-				case PSB_CROSS:Beep=0;Delay_ms(300);kind = 8;break;
-				case PSB_PINK:Beep=0;Delay_ms(300);kind = 9;break;
-				case PSB_CIRCLE:Beep=0;Delay_ms(300);kind = 10;break;
-
-				case PSB_L1:Beep=0;Delay_ms(300);kind = 6;break;
-				case PSB_L2:Beep=0;Delay_ms(300);kind = 5;break;
-				case PSB_R1:Beep=0;Delay_ms(300);kind = 12;break;
-				case PSB_R2:Beep=0;Delay_ms(300);kind = 11;break;
-				default:Beep=1;break;
-			}
-			if (kind != 0)
-			{		
-				flag_ps2_rev = 1;
-				flag_connect = 1;
-				SpiFlashRead(ps2_buf,(PS2_FLASH_ADDR)<<WRITE_BIT_DEPTH,sizeof(ps2_buf));
-				sprintf(buf,"%dK",kind);
-				UART_PutStr(USART1,buf);
-				p = strstr(ps2_buf,buf);
-				if (p != NULL)
-				{
-					p = p + strlen(buf);
-					while(i < 14 && *p != 0)
-					{
-						buf[i] = *p++;
-						i++;
-						if (*p == '#')
-							break;
-					}
-					if (i < 12)
-					{
-						buf[i] = '\r';
-						buf[i+1] = '\n';
-						memcpy(redata,buf,sizeof(buf));
-						flag_RecFul = 1;
-					}
-					UART_PutStr(USART1,redata);
-					
-			}
-		}
-		}
-		else if(ps2_mode==1)
-		{
-				switch(key)
-				{
-					case PSB_PAD_DOWN:CPWM[2]+=10;if(CPWM[2]>=2300)   CPWM[2]=2300;dj2+=10;if(dj2>=2200)dj2=2200;sprintf(buf,"#2P%dT1\r\n",dj2);UART_PutStr(USART3,buf);break; 
-					case PSB_PAD_UP:CPWM[2]-=10;if(CPWM[2]<=700)  CPWM[2]=700;dj2-=10;if(dj2<=700)dj2=700;sprintf(buf,"#2P%dT1\r\n",dj2);UART_PutStr(USART3,buf);break;
-					case PSB_PAD_LEFT:CPWM[1]+=10;if(CPWM[1]>=2300) CPWM[1]=2300;dj1+=10;if(dj1>=2200)dj1=2200;sprintf(buf,"#1P%dT1\r\n",dj1);UART_PutStr(USART3,buf);break; 
-					case PSB_PAD_RIGHT:CPWM[1]-=10;if(CPWM[1]<=700) CPWM[1]=700;dj1-=10;if(dj1<=700)dj1=700;sprintf(buf,"#1P%dT1\r\n",dj1);UART_PutStr(USART3,buf);break;
-		
-					case PSB_TRIANGLE:CPWM[3]+=10;if(CPWM[3]>=2300) CPWM[3]=2300;dj3+=10;if(dj3>=2200)dj3=2200;sprintf(buf,"#3P%dT1\r\n",dj3);UART_PutStr(USART3,buf);break; 
-					case PSB_CROSS:CPWM[3]-=10;if(CPWM[3]<=700)  CPWM[3]=700;dj3-=10;if(dj3<=700)dj3=700;sprintf(buf,"#3P%dT1\r\n",dj3);UART_PutStr(USART3,buf);break;
-					case PSB_PINK:CPWM[4]+=10;if(CPWM[4]>=2300)  CPWM[4]=2300;dj4+=10;if(dj4>=2300)dj4=2300;sprintf(buf,"#4P%dT1\r\n",dj4);UART_PutStr(USART3,buf);break; 
-					case PSB_CIRCLE:CPWM[4]-=10;if(CPWM[4]<=700) CPWM[4]=700;dj4-=10;if(dj4<=700)dj4=700;sprintf(buf,"#4P%dT1\r\n",dj4);UART_PutStr(USART3,buf);break;
-
-					case PSB_L1:CPWM[5]+=10;if(CPWM[5]>=2300) CPWM[5]=2300;dj5+=10;if(dj5>=2200)dj5=2200;sprintf(buf,"#5P%dT1\r\n",dj5);UART_PutStr(USART3,buf);break; 
-					case PSB_L2:CPWM[5]-=10;if(CPWM[5]<=700)  CPWM[5]=700;dj5-=10;if(dj5<=700)dj5=700;sprintf(buf,"#5P%dT1\r\n",dj5);UART_PutStr(USART3,buf);break;
-					case PSB_R1:CPWM[6]+=10;if(CPWM[6]>=2300) CPWM[6]=2300;dj6+=10;if(dj6>=2300)dj6=2300;sprintf(buf,"#6P%dT1\r\n",dj6);UART_PutStr(USART3,buf);break; 
-					case PSB_R2:CPWM[6]-=10;if(CPWM[6]<=700)  CPWM[6]=700;dj6-=10;if(dj6<=700)dj6=700;sprintf(buf,"#6P%dT1\r\n",dj6);UART_PutStr(USART3,buf);break;
-					default:break;
-				}
-		}
-	}
-}
-
 
 /***************************************************************************************************************
 函 数 名：从flash读取舵机总的信息
@@ -320,14 +213,11 @@ void ReadOneCmdInfor(unsigned int addr)
 	}
 	else//正常信息,以后留着验证用的
 	{
-		
-		
 		cur_item.tuoji_count = motor_one_cmd.tuoji_count;//脱机运行次数
 		cur_item.cur_num = motor_one_cmd.start;
 	//	UART1_SendOneChar(motor_one_cmd.tuoji_count + 0x30);
 	//	cur_item.cur_num = 0;//清 0
 	}
-		
 }
 /***************************************************************************************************************
 函 数 名：把舵机信息写到flash中
@@ -445,6 +335,7 @@ void GetOneMotorCMD(void)
 		}	
 		if (flag_online_run)
 		{
+			//	UART_PutStr(USART1,"111\r\n");
 			if ((send_mode & SEND_CC) != 0  || cur_item.cur_num == motor_one_cmd.start)//如果当前需要更新舵机命令
 			{
 				if (cur_item.tuoji_count > 0)//脱机次数没结束
@@ -452,6 +343,9 @@ void GetOneMotorCMD(void)
 					if (cur_item.cur_num < motor_one_cmd.end)//判断是否读取结束
 					{
 						SpiFlashRead((unsigned char *)redata,((long)cur_item.cur_num)<<WRITE_BIT_DEPTH,WRITE_SIZE);//读取命令
+						//UART_PutStr(USART1,redata);
+						//UART_Put_Num(cur_item.cur_num);
+					//	UART_Put_Num(motor_one_cmd.end);
 						flag_RecFul = 1;//标志位为1，
 						cur_item.cur_num++;//
 					}
@@ -463,6 +357,7 @@ void GetOneMotorCMD(void)
 				}
 				else//执行完成
 				{
+				//	UART_PutStr(USART1,"444\r\n");
 					flag_online_run = 0;
 					if (flag_connect_run)//如果上位机选择执行的功能，需要发送 AGF作为结束
 					{
@@ -505,8 +400,6 @@ void GetOneMotorCMD(void)
 			cur_item.file_num++;
 		}
 	}
-		
-	
 }
 /***************************************************************************************************************
 函 数 名：发送串口状态信息
@@ -543,7 +436,6 @@ void SendUartState(void)
 			UART_PutStr(USART1,buf);
 #endif
 		}
-
 		if (send_mode & SEND_START_OK)//发送连接时候的字符串
 		{
 			UART_PutStr(USART1,"#Veri+UART+OK+20160906+176\r\n");
@@ -574,7 +466,6 @@ void SendUartState(void)
 							UART_PutStr(USART1,buf);//发送
 						}
 					}
-
 				}
 				UART_PutStr(USART1,"\r\n");				
 			}
@@ -601,7 +492,6 @@ void SendUartState(void)
 					motor_one_cmd.tuoji_count = 0;
 					WriteOneCmdInfor(i);
 				}
-
 			}
 			WriteMoterInfor();
 			UART_PutStr(USART1,"#Disable+OK...\r\n");
@@ -610,7 +500,7 @@ void SendUartState(void)
 		if (send_mode & SEND_SET_ONLINE_OK)//发送联机运行状态
 		{
 			UART_PutStr(USART1,"#OK\r\n");
-			sprintf(buf,"#%dGC%d\r\n",cur_item.file_num,tuoji_count);
+			sprintf(buf,"#%dGC%d\r\n",cur_item.file_num,cur_item.tuoji_count);
 			UART_PutStr(USART1,buf);
 			UART_PutStr(USART1,"#LP=0\r\n");
 			send_mode &= ~SEND_SET_ONLINE_OK;
@@ -690,11 +580,9 @@ void SendUartState(void)
 						buf[3] = cur_item.read_num % 10 + 0x30;
 						buf[4] = 'P';buf[5] = 'R';buf[6] = 'A';buf[7] = 'D';buf[8] = '\r';buf[9] = '\n';
 						UART_PutStr(USART3,buf);
-						
 					}
 					flag_uart2_rev = 0;
 					count = 0;
-					
 				}
 				else
 				{
@@ -786,8 +674,6 @@ void SendUartState(void)
 		send_mode &= ~SEND_SET_BEEP_OFF;
 	}		
 }
-
-
 /***************************************************************************************************************
 函 数 名：作业初位置，末尾置更新函数  
 功能描述：从缓存中取一个新的目标位置替换原来的目标位置，原来的目标位置变为新的初位置，一次更替
@@ -809,7 +695,7 @@ void SendUartState(void)
 		   	point_aim=0;
 		if(point_now==7)
 		   	point_now=0;
-		n=pos[point_aim][0]*4/8;	//计算新的插补次数	
+		n=pos[point_aim][0]/20;	//计算新的插补次数	
 
 		for(s=1;s<MOTOR_NUM;s++)	//计算新的插补增量
 		{
@@ -826,11 +712,9 @@ void SendUartState(void)
 			}
 				//UART_Put_Inf("dp:",dp);
 			// UART_Put_Inf("n",n);
-			
 	   }
 		m=0;				  	//m清0
 		flag_stop=0;		  	//产生了新的目标位置，停止标志清零
-
 	}
 	else	  					//没有缓存数据，即line==0
 	{
@@ -876,8 +760,7 @@ void vpwm(void)
 			{
 				CPWM[j]=pos[point_now][j]+m*dp0[j];
 			}
-		} 
-			   												
+		} 								
 		if(how==MOTOR_NUM-1)
 			flag_how=1;	  					//16个舵机都到达终点
 		how=0; 
@@ -887,16 +770,10 @@ void vpwm(void)
 			 flag_how=0;
 			 flag_stop=1;
 		}
-		
 	 }
 	return;
-
 }
-
-
-
 /************************************************************************/
-
 #if 0
 void SerVor_Test(void)
 {

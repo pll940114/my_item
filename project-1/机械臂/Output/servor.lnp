@@ -35,6 +35,7 @@
 ".\output\oneline.o"
 ".\output\beep.o"
 ".\output\adc.o"
+".\output\sensor.o"
 ".\output\delay.o"
 ".\output\sys.o"
 ".\output\usart.o"
